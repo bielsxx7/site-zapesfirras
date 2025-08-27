@@ -300,24 +300,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // --- Notificação Temporária ---
+// --- Notificação Temporária ---
     let timeoutNotificacao;
     function mostrarNotificacao(event, mensagem) {
         clearTimeout(timeoutNotificacao);
-        notificacao.style.left = `${event.clientX}px`;
-        notificacao.style.top = `${event.clientY - 50}px`;
+
+        // Define o texto da notificação
+        textoNotificacao.textContent = mensagem;
+
+        // Calcula a posição para a notificação aparecer acima e centralizada no botão
+        // Pega as dimensões do botão clicado para posicionar a notificação
+        const rect = event.target.getBoundingClientRect();
+        
+        // Posiciona a notificação no centro horizontal do botão e acima dele
+        notificacao.style.left = `${rect.left + rect.width / 2}px`;
+        notificacao.style.top = `${rect.top - notificacao.offsetHeight - 10}px`; // 10px acima do botão
+
 
         notificacao.classList.add('mostrar');
 
         timeoutNotificacao = setTimeout(() => {
             notificacao.classList.remove('mostrar');
-        }, 2000);
-    }
-    
-    // --- Painel do Carrinho ---
-    function abrirPainelCarrinho() {
-        painelCarrinho.classList.add('ativo');
-        sobreposicaoCarrinho.classList.add('ativo');
+        }, 2000); // A notificação desaparece após 2 segundos
     }
 
     function fecharPainelCarrinho() {

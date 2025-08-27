@@ -253,12 +253,23 @@ body {
     visibility: hidden;
     transition: opacity 0.3s ease, transform 0.3s ease;
     transform: translate(-50%, -100%);
+    /* Adicione estes estilos para garantir que o texto seja exibido e a notificação tenha um bom tamanho */
+    min-width: 150px; /* Garante uma largura mínima */
+    text-align: center; /* Centraliza o texto */
+    font-size: 0.9em; /* Ajusta o tamanho da fonte */
+    white-space: nowrap; /* Impede a quebra de linha indesejada */
 }
 
 .notificacao.mostrar {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0);
+}
+
+/* Adicione um estilo para o texto da notificação */
+#texto-notificacao {
+    color: white; /* Garante que o texto seja branco */
+    font-weight: 600; /* Deixa o texto em negrito */
 }
 
 /* --- Seções do Conteúdo Principal --- */
