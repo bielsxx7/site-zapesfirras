@@ -390,7 +390,6 @@ body {
     overflow: hidden; /* Corta texto se for muito longo */
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limita a 2 linhas */
     -webkit-box-orient: vertical;
 }
 .texto-info-produto p { display: none; } /* Mantém descrição longa escondida */
@@ -566,12 +565,10 @@ body {
     .texto-info-produto h3 { 
         font-size: 0.9rem; 
         margin-bottom: 3px;
-        -webkit-line-clamp: 2; /* Manter em 2 linhas */
     }
     .texto-info-produto h4 { 
         font-size: 0.75rem; 
         min-height: 30px; /* Ajustar altura mínima para descrição */
-        -webkit-line-clamp: 2; /* Manter em 2 linhas */
     }
     .acoes-produto {
         gap: 6px;
@@ -624,12 +621,10 @@ body {
     .texto-info-produto h3 {
         font-size: 0.65rem; /* Fonte minúscula */
         margin-bottom: 1px;
-        -webkit-line-clamp: 2; /* Manter em 2 linhas */
     }
     .texto-info-produto h4 {
         font-size: 0.55rem; /* Fonte ainda menor */
         min-height: 20px; /* Ajustar altura mínima */
-        -webkit-line-clamp: 2; /* Manter em 2 linhas */
     }
     .acoes-produto {
         gap: 3px;
