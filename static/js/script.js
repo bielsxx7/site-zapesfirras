@@ -1,15 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- CÓDIGO DE TESTE PARA ADICIONAR ---
-    console.log("--- INICIANDO TESTE DE DEPURAÇÃO ---");
-    console.log("Verificando elemento #botao-carrinho:", document.getElementById('botao-carrinho'));
-    console.log("Verificando elemento #painel-carrinho:", document.getElementById('painel-carrinho'));
-    console.log("Verificando elemento #sobreposicao-carrinho:", document.getElementById('sobreposicao-carrinho'));
-    console.log("Verificando elemento #botao-fechar-painel:", document.getElementById('botao-fechar-painel'));
-    console.log("--- FIM DO TESTE ---");
-    // --- FIM DO CÓDIGO DE TESTE ---
 
-    // --- Referências de Elementos ---
+    // --- Lógica para Ajuste Dinâmico do Header (ESSENCIAL PARA O LAYOUT) ---
+    const barraNavegacao = document.querySelector('.barra-navegacao');
+    function ajustarPaddingCorpo() {
+        if (barraNavegacao) {
+            const alturaHeader = barraNavegacao.offsetHeight;
+            document.body.style.paddingTop = `${alturaHeader}px`;
+        }
+    }
+    // Ajusta o padding assim que a página carrega
+    ajustarPaddingCorpo();
+    // Ajusta novamente caso o usuário redimensione a janela
+    window.addEventListener('resize', ajustarPaddingCorpo);
+
+
+    // --- Referências de Elementos (DO SEU CÓDIGO ORIGINAL) ---
     const telaCarregamento = document.getElementById('tela-carregamento');
     const conteudoPrincipal = document.getElementById('conteudo-principal');
     const menuHamburguer = document.querySelector('.menu-hamburguer');
@@ -17,15 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const carrosselCategorias = document.querySelector('.carrossel-categorias');
     const botaoAnterior = document.querySelector('.botao-anterior');
     const botaoProximo = document.querySelector('.botao-proximo');
-
     const caixaPesquisa = document.querySelector('.caixa-pesquisa');
     const botaoPesquisa = document.querySelector('.botao-pesquisa');
     const entradaPesquisa = document.querySelector('.texto-pesquisa');
     const mensagemSemResultados = document.getElementById('sem-resultados');
-    
     const botoesDetalhes = document.querySelectorAll('.botao-detalhes');
     const botoesAdicionar = document.querySelectorAll('.botao-adicionar');
-
     const sobreposicaoModal = document.getElementById('modal-sobreposicao');
     const botaoFecharModal = document.getElementById('botao-fechar-modal');
     const imagemProdutoModal = document.getElementById('imagem-produto-modal');
@@ -38,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const botaoMenos = document.querySelector('.botao-menos');
     const botaoAdicionarCarrinhoModal = document.querySelector('.botao-adicionar-carrinho-modal');
     const areaObservacaoProduto = document.getElementById('observacao-produto');
-    
     const botaoCarrinho = document.getElementById('botao-carrinho');
     const painelCarrinho = document.getElementById('painel-carrinho');
     const sobreposicaoCarrinho = document.getElementById('sobreposicao-carrinho');
@@ -49,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const contadorCarrinhoSpan = document.getElementById('contador-carrinho');
     const notificacao = document.getElementById('notificacao');
     const textoNotificacao = document.getElementById('texto-notificacao');
+    console.log("Elemento Hamburguer encontrado:", menuHamburguer);
+    console.log("Elemento Navegação encontrado:", menuNavegacao);
 
     let precoProdutoAtual = 0;
     let carrinho = [];
@@ -65,11 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }, duracaoCarregamento);
 
     // --- Lógica do Menu Hambúrguer ---
-    if (menuHamburguer && menuNavegacao) {
-        menuHamburguer.addEventListener('click', () => {
-            menuNavegacao.classList.toggle('ativo');
-        });
-    }
+// --- Lógica do Menu Hambúrguer ---
+if (menuHamburguer && menuNavegacao) {
+    menuHamburguer.addEventListener('click', () => {
+        console.log("O clique no menu FOI REGISTRADO!"); // ADICIONE ESTA LINHA
+        menuNavegacao.classList.toggle('ativo');
+    });
+}
 
     // --- Lógica do Carrossel ---
     if (carrosselCategorias && botaoAnterior && botaoProximo) {
@@ -129,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // --- Lógica para ABRIR e FECHAR o Modal ---
+    // --- Lógica para ABRIR e FECHAR o Modal (DO SEU CÓDIGO ORIGINAL) ---
     botoesDetalhes.forEach(btn => {
         btn.addEventListener('click', (event) => {
             const cartao = event.target.closest('.cartao-produto');
@@ -306,36 +311,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // --- Notificação Temporária (VERSÃO CORRIGIDA) ---
+    // --- Notificação Temporária ---
     let timeoutNotificacao;
     function mostrarNotificacao(event, mensagem) {
         clearTimeout(timeoutNotificacao);
         
-        // Esta é a linha principal que adiciona a mensagem
-        if(textoNotificacao) textoNotificacao.textContent = mensagem; 
+        // LINHA CORRIGIDA PARA MOSTRAR O TEXTO
+        textoNotificacao.textContent = mensagem;
 
-        // Usamos a posição do cursor para definir onde a notificação vai aparecer.
-        // O posicionamento final (subir um pouco) será feito pelo CSS com 'transform'.
-        if(notificacao){
-            notificacao.style.left = `${event.clientX}px`;
-            notificacao.style.top = `${event.clientY}px`;
-            notificacao.classList.add('mostrar');
-        }
+        notificacao.style.left = `${event.clientX}px`;
+        notificacao.style.top = `${event.clientY - 50}px`;
+        notificacao.classList.add('mostrar');
 
         timeoutNotificacao = setTimeout(() => {
-            if(notificacao) notificacao.classList.remove('mostrar');
-        }, 2000); // A notificação desaparece após 2 segundos
+            notificacao.classList.remove('mostrar');
+        }, 2000);
     }
     
     // --- Funções do Painel do Carrinho ---
     function abrirPainelCarrinho() {
-        if(painelCarrinho) painelCarrinho.classList.add('ativo');
-        if(sobreposicaoCarrinho) sobreposicaoCarrinho.classList.add('ativo');
+        painelCarrinho.classList.add('ativo');
+        sobreposicaoCarrinho.classList.add('ativo');
     }
 
     function fecharPainelCarrinho() {
-        if(painelCarrinho) painelCarrinho.classList.remove('ativo');
-        if(sobreposicaoCarrinho) sobreposicaoCarrinho.classList.remove('ativo');
+        painelCarrinho.classList.remove('ativo');
+        sobreposicaoCarrinho.classList.remove('ativo');
     }
     
     // Anexa os eventos de clique aos botões do carrinho
