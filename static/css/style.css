@@ -17,6 +17,9 @@
 body {
     font-family: 'Poppins', sans-serif;
     color: var(--text-color);
+    /* --- MODIFICAÇÃO APLICADA AQUI --- */
+    /* Adiciona um preenchimento no topo do corpo da página para não ficar atrás do menu fixo */
+    padding-top: 160px; 
 }
 
 /* --- Tela de Carregamento --- */
@@ -240,7 +243,7 @@ body {
     display: none;
 }
 
-/* --- Notificação Flutuante (VERSÃO CORRIGIDA) --- */
+/* --- Notificação Flutuante --- */
 .notificacao {
     position: fixed;
     z-index: 1000;
@@ -251,22 +254,19 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     opacity: 0;
     visibility: hidden;
-    /* Posição inicial: centralizada no cursor */
-    transform: translate(-50%, 0); 
+    transform: translate(-50%, 0);
     transition: opacity 0.3s ease, transform 0.3s ease;
     min-width: 150px;
     text-align: center;
     font-size: 0.9em;
     white-space: nowrap;
-    /* MUITO IMPORTANTE: Impede que a notificação bloqueie cliques quando estiver invisível */
-    pointer-events: none; 
+    pointer-events: none;
 }
 
 .notificacao.mostrar {
     opacity: 1;
     visibility: visible;
-    /* Ao aparecer, a notificação sobe, criando um efeito "popup" acima do cursor */
-    transform: translate(-50%, -150%); 
+    transform: translate(-50%, -150%);
 }
 
 #texto-notificacao {
@@ -277,7 +277,8 @@ body {
 /* --- Seções do Conteúdo Principal --- */
 .container-principal {
     padding: 30px 5%;
-    padding-top: 80px; /* Adiciona padding para evitar que o conteúdo fique atrás do cabeçalho fixo */
+    left: 50px
+    /* O padding-top foi movido para o body para uma aplicação mais global */
 }
 
 .container-secao {
@@ -310,7 +311,7 @@ body {
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    min-width: 90px;
+    min-width: 150px;
     color: var(--text-color);
     transition: transform 0.2s;
 }
@@ -816,6 +817,11 @@ body {
 
 /* --- Responsividade (Media Query) --- */
 @media screen and (max-width: 768px) {
+    body {
+        /* Garante que o padding também se aplique a telas menores */
+        padding-top: 80px; 
+    }
+    
     .barra-navegacao {
         padding: 15px 5%;
         flex-wrap: wrap;
