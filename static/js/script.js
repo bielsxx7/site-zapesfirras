@@ -68,13 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }, duracaoCarregamento);
 
     // --- Lógica do Menu Hambúrguer ---
-// --- Lógica do Menu Hambúrguer ---
-if (menuHamburguer && menuNavegacao) {
-    menuHamburguer.addEventListener('click', () => {
-        console.log("O clique no menu FOI REGISTRADO!"); // ADICIONE ESTA LINHA
-        menuNavegacao.classList.toggle('ativo');
-    });
-}
+    if (menuHamburguer && menuNavegacao) {
+        menuHamburguer.addEventListener('click', () => {
+            console.log("O clique no menu FOI REGISTRADO!"); 
+            menuNavegacao.classList.toggle('ativo');
+        });
+    }
 
     // --- Lógica do Carrossel ---
     if (carrosselCategorias && botaoAnterior && botaoProximo) {
@@ -177,7 +176,8 @@ if (menuHamburguer && menuNavegacao) {
             const imagem = cartao.querySelector('.container-detalhes-produto img').src;
 
             adicionarAoCarrinho(nome, 1, preco, null, imagem);
-            mostrarNotificacao(event, `1 "${nome}" adicionado!`);
+            // ***** CORREÇÃO 1 APLICADA AQUI *****
+            mostrarNotificacao(`1 "${nome}" adicionado!`);
         });
     });
     
@@ -212,7 +212,8 @@ if (menuHamburguer && menuNavegacao) {
             const imagemProduto = imagemProdutoModal.src;
             adicionarAoCarrinho(nomeProduto, quantidade, precoProdutoAtual, observacaoProduto, imagemProduto);
             sobreposicaoModal.classList.remove('ativo');
-            mostrarNotificacao(event, `${quantidade} "${nomeProduto}" adicionado!`);
+            // ***** CORREÇÃO 2 APLICADA AQUI *****
+            mostrarNotificacao(`${quantidade} "${nomeProduto}" adicionado!`);
         });
     }
 
@@ -313,14 +314,12 @@ if (menuHamburguer && menuNavegacao) {
     
     // --- Notificação Temporária ---
     let timeoutNotificacao;
-    function mostrarNotificacao(event, mensagem) {
+    function mostrarNotificacao(mensagem) { // A função agora só aceita a mensagem
+        if (!notificacao || !textoNotificacao) return;
         clearTimeout(timeoutNotificacao);
         
-        // LINHA CORRIGIDA PARA MOSTRAR O TEXTO
         textoNotificacao.textContent = mensagem;
 
-        notificacao.style.left = `${event.clientX}px`;
-        notificacao.style.top = `${event.clientY - 50}px`;
         notificacao.classList.add('mostrar');
 
         timeoutNotificacao = setTimeout(() => {
