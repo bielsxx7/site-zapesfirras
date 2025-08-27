@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- CÓDIGO DE TESTE PARA ADICIONAR ---
+    console.log("--- INICIANDO TESTE DE DEPURAÇÃO ---");
+    console.log("Verificando elemento #botao-carrinho:", document.getElementById('botao-carrinho'));
+    console.log("Verificando elemento #painel-carrinho:", document.getElementById('painel-carrinho'));
+    console.log("Verificando elemento #sobreposicao-carrinho:", document.getElementById('sobreposicao-carrinho'));
+    console.log("Verificando elemento #botao-fechar-painel:", document.getElementById('botao-fechar-painel'));
+    console.log("--- FIM DO TESTE ---");
+    // --- FIM DO CÓDIGO DE TESTE ---
+
     // --- Referências de Elementos ---
     const telaCarregamento = document.getElementById('tela-carregamento');
     const conteudoPrincipal = document.getElementById('conteudo-principal');
@@ -142,16 +152,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (areaObservacaoProduto) areaObservacaoProduto.value = '';
 
             sobreposicaoModal.classList.add('ativo');
-            
-            document.addEventListener('keydown', prenderTeclado);
-            if (entradaQuantidade) entradaQuantidade.focus();
         });
     });
 
     if (botaoFecharModal) {
         botaoFecharModal.addEventListener('click', () => {
             sobreposicaoModal.classList.remove('ativo');
-            document.removeEventListener('keydown', prenderTeclado);
         });
     }
     
@@ -300,35 +306,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-// --- Notificação Temporária ---
+    // --- Notificação Temporária (VERSÃO CORRIGIDA) ---
     let timeoutNotificacao;
     function mostrarNotificacao(event, mensagem) {
         clearTimeout(timeoutNotificacao);
-
-        // Define o texto da notificação
-        textoNotificacao.textContent = mensagem;
-
-        // Calcula a posição para a notificação aparecer acima e centralizada no botão
-        // Pega as dimensões do botão clicado para posicionar a notificação
-        const rect = event.target.getBoundingClientRect();
         
-        // Posiciona a notificação no centro horizontal do botão e acima dele
-        notificacao.style.left = `${rect.left + rect.width / 2}px`;
-        notificacao.style.top = `${rect.top - notificacao.offsetHeight - 10}px`; // 10px acima do botão
+        // Esta é a linha principal que adiciona a mensagem
+        if(textoNotificacao) textoNotificacao.textContent = mensagem; 
 
-
-        notificacao.classList.add('mostrar');
+        // Usamos a posição do cursor para definir onde a notificação vai aparecer.
+        // O posicionamento final (subir um pouco) será feito pelo CSS com 'transform'.
+        if(notificacao){
+            notificacao.style.left = `${event.clientX}px`;
+            notificacao.style.top = `${event.clientY}px`;
+            notificacao.classList.add('mostrar');
+        }
 
         timeoutNotificacao = setTimeout(() => {
-            notificacao.classList.remove('mostrar');
+            if(notificacao) notificacao.classList.remove('mostrar');
         }, 2000); // A notificação desaparece após 2 segundos
+    }
+    
+    // --- Funções do Painel do Carrinho ---
+    function abrirPainelCarrinho() {
+        if(painelCarrinho) painelCarrinho.classList.add('ativo');
+        if(sobreposicaoCarrinho) sobreposicaoCarrinho.classList.add('ativo');
     }
 
     function fecharPainelCarrinho() {
-        painelCarrinho.classList.remove('ativo');
-        sobreposicaoCarrinho.classList.remove('ativo');
+        if(painelCarrinho) painelCarrinho.classList.remove('ativo');
+        if(sobreposicaoCarrinho) sobreposicaoCarrinho.classList.remove('ativo');
     }
     
+    // Anexa os eventos de clique aos botões do carrinho
     if (botaoCarrinho && painelCarrinho && sobreposicaoCarrinho && botaoFecharPainel) {
         botaoCarrinho.addEventListener('click', abrirPainelCarrinho);
         botaoFecharPainel.addEventListener('click', fecharPainelCarrinho);

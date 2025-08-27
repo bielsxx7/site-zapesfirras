@@ -240,7 +240,7 @@ body {
     display: none;
 }
 
-/* --- Notificação Flutuante --- */
+/* --- Notificação Flutuante (VERSÃO CORRIGIDA) --- */
 .notificacao {
     position: fixed;
     z-index: 1000;
@@ -251,25 +251,27 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     opacity: 0;
     visibility: hidden;
+    /* Posição inicial: centralizada no cursor */
+    transform: translate(-50%, 0); 
     transition: opacity 0.3s ease, transform 0.3s ease;
-    transform: translate(-50%, -100%);
-    /* Adicione estes estilos para garantir que o texto seja exibido e a notificação tenha um bom tamanho */
-    min-width: 150px; /* Garante uma largura mínima */
-    text-align: center; /* Centraliza o texto */
-    font-size: 0.9em; /* Ajusta o tamanho da fonte */
-    white-space: nowrap; /* Impede a quebra de linha indesejada */
+    min-width: 150px;
+    text-align: center;
+    font-size: 0.9em;
+    white-space: nowrap;
+    /* MUITO IMPORTANTE: Impede que a notificação bloqueie cliques quando estiver invisível */
+    pointer-events: none; 
 }
 
 .notificacao.mostrar {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%, 0);
+    /* Ao aparecer, a notificação sobe, criando um efeito "popup" acima do cursor */
+    transform: translate(-50%, -150%); 
 }
 
-/* Adicione um estilo para o texto da notificação */
 #texto-notificacao {
-    color: white; /* Garante que o texto seja branco */
-    font-weight: 600; /* Deixa o texto em negrito */
+    color: white;
+    font-weight: 600;
 }
 
 /* --- Seções do Conteúdo Principal --- */
